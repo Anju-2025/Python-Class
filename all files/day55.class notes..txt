@@ -1,0 +1,62 @@
+create database databaseday6;
+use databaseday6;
+
+create table students1(
+id int auto_increment,
+name varchar(20),
+place varchar(20),
+primary key(id)
+);        
+                            -- autoincremnt
+autoincrement:
+
+autoincrement field will increment the id from 1.
+if we insert first as id=100,then from next autoincrement from 101.
+
+insert into students1 values(100,"fathima","kannur");     -- to_start_with_100
+insert into students1(name,place)values("anu","ktym"),("ammu","kochi"),("keerthi","tvm"),("rahul","idk");
+select * from students1;
+truncate table students1;        -- differencebtw_delete&truncate
+delete from students1;
+
+input : ammu
+output : Ammu
+step by step answer : 
+select substring(name,1,1)from students1;
+select upper(substring(name,1,1))from students1;
+select substring(name,2)from students1;
+select lower(substring(name,2))from students1;
+select concat(upper(substring(name,1,1)),lower(substring(name,2)))as name from students1;
+select * from students1;
+
+-- between(include both start and end value)
+
+select * from students1 where id between 3 and 5;
+select * from students1 where name between "a%" and "g%";
+-- notbetween
+select * from students1 where id  not between 3 and 5;
+select * from students1 where name not between "a%" and "g%";
+-- in
+select * from students1 where name in ('anu',"rahul","keerthi");
+
+-- notin
+select * from students1 where name not in ('anu',"rahul","keerthi");
+
+-- subquery
+select name from students1 where id =(select max(id)from students1);
+select max(id)from students1;
+
+-- exists
+
+select * from students1 where exists (select * from student where id=2);
+-- manuallycreating table
+use databaseda6;
+select * from tableday6;
+
+-- notnull
+select * from tableday6 where age is not null;
+-- is null
+select * from tableday6 where age is null;
+
+
+

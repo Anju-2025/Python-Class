@@ -1,0 +1,222 @@
+
+#Phonebook using OOPS
+class AddDetails:
+    def add_phone(self):
+        self.phone = int(input("Enter phone no: "))
+        add_ph = True
+        self.phone_list = []
+        self.phone_list.append(self.phone)
+        while add_ph:
+            ph_ch = input("Add another one? Type 'Y' or 'N': ").upper()
+            if ph_ch == "Y":
+                alt_ph = int(input("Enter another no: "))
+                self.phone_list.append(alt_ph)
+            else:
+                add_ph = False
+        return self.phone_list
+
+# obj=AddDetails()
+# print(obj.add_phone())
+
+    def add_email(self):
+        self.email = input("Enter email: ")
+        add_email = True
+        self.email_list = []
+        self.email_list.append(self.email)
+        while add_email:
+            em_ch = input("Add another one? Type 'Y' or 'N': ").upper()
+            if em_ch == "Y":
+                alt_em = input("Enter another email: ")
+                self.email_list.append(alt_em)
+            else:
+                add_email = False
+        return self.email_list
+
+class Phonebook:
+    contacts = {}
+    def __init__(self, name, address, emailList, phoneList):
+        self.u_name = name
+        self.add = address
+        self.email = emailList
+        self.phNo = phoneList
+
+    def addContact(self):
+        self.contacts[self.u_name] = {"name":self.u_name, "address":self.add, "email":self.email, "phone":self.phNo}
+        print("Contact added successfully")
+
+    def updateContact(self, name):
+        if name in self.contacts:
+            print("1. Update name: ")
+            print("2. Update Address: ")
+            print("3. Update Email: ")
+            print("4. Update Phone No: ")
+            upChoice = int(input("Enter your choice: "))
+
+            if upChoice == 1:
+                newName = input("Enter new name for the contact: ")
+                self.contacts[newName] = self.contacts.pop(name)
+                self.contacts[newName]["name"] = newName
+                print("Updated name successfully.")
+            elif upChoice == 2:
+                newAdd = input("Enter new address: ")
+                self.contacts[name]["address"] = newAdd
+                print("Updated address successfully.")
+            elif upChoice == 3:
+                emailList = self.contacts[name]["email"]
+                if len(emailList) > 0:
+                    for i in range(len(emailList)):
+                        ch = input(f"{emailList[i]} update? Type 'Y' or 'N': ").upper()
+                        if ch == "Y":
+                            newEmail = input("Enter new Email: ")
+                            emailList[i] = newEmail
+                            print("Updated email successfully.")
+                else:
+                    ad = AddDetails()
+                    emailList = ad.add_email()
+                    self.contacts[name]["email"] = emailList
+                    print("Email added successfully.")
+
+            elif upChoice == 4:
+                ph_list = self.contacts[name]["phone"]
+                if len(ph_list) > 0:
+                    for i in range(len(ph_list)):
+                        ch = input(f"{ph_list[i]} update? Type 'Y' or 'N': ").upper()
+                        if ch == "Y":
+                            newPh = int(input("Enter new Phone no: "))
+                            ph_list[i] = newPh
+                    print("Updated phone no successfully.")
+                else:
+                    ad = AddDetails()
+                    phoneList = ad.add_phone()
+                    self.contacts[name]["phone"] = phoneList
+                    print("Phone no added successfully.")
+            else:
+                print("Enter a number from 1 to 4")
+        else:
+            print(f"{name} contact doesn't exist.")
+
+    def deleteContact(self, name):
+        if name in self.contacts:
+            print("A. Delete full contact details")
+            print("B. Delete address")
+            print("C. Delete Email")
+            print("D. Delete Phone no")
+            ch = input("Enter your choice: (A, B, C, D): ").upper()
+            if ch == "A":
+                del self.contacts[name]
+                print(f"{name} contact deleted successfully.")
+            elif ch == "B":
+                del self.contacts[name]["address"]
+                print(f"{name}'s address deleted successfully.")
+            elif ch == "C":
+                emailList = self.contacts[name]["email"]
+                if len(emailList) > 0:
+                    for em in emailList:
+                        ch = input(f"Delete {em}? Type 'Y' or 'N': ").upper()
+                        if ch == "Y":
+                            emailList.remove(em)
+                            print(f"{name}'s email deleted successfully.")
+                else:
+                    print(f"No email for {name}'s contact.")
+            elif ch == "D":
+                ph_list = self.contacts[name]["phone"]
+                if len(ph_list) > 0:
+                    for ph in ph_list:
+                        ch = input(f"{ph} Delete? Type 'Y' or 'N': ").upper()
+                        if ch == "Y":
+                            ph_list.remove(ph)
+                            print(f"{name}'s phone no deleted successfully.")
+                else:
+                    print(f"No phone no for {name}'s contact.")  
+        else:
+            print(f"{name} contact doesn't exist.")
+
+
+    def viewDetails(self, name):
+        if name in self.contacts:
+            uName = self.contacts[name]["name"]
+            if "address" in self.contacts[name]:
+                uAdd=self.contacts[name]["address"]
+                print(f"\nAddress: {uAdd}")
+            
+            uEmail = self.contacts[name]["email"]
+            print(f"Name: {uName}")
+            for em in uEmail:
+                print(f"Email: {em}")
+            for ph in self.contacts[name]["phone"]:
+                print(f"PhoneNo: {ph}")
+        else:
+            print(f"{name} contact doesn't exist.")
+
+    def viewAllContacts(self):
+        if len(self.contacts) > 0:
+            count = 1
+            for keyName in self.contacts.keys():
+                uName = self.contacts[keyName]["name"]
+                if "address" in self.contacts[name]:
+                    uAdd = self.contacts[keyName]["address"]
+                    print(f"\nAddress: {uAdd}")
+                uEmail = self.contacts[keyName]["email"]
+                print(f"{count}. Name: {uName}")
+                for em in uEmail:
+                    print(f"Email: {em}")
+                for ph in self.contacts[keyName]["phone"]:
+                    print(f"Phone No: {ph}")
+                count += 1
+        else:
+            print("No contacts")
+
+is_continue = True
+
+while is_continue:
+    print("1. Add Contact")
+    print("2. Update a contact")
+    print("3. Delete a contact")
+    print("4. View a Contact")
+    print("5. View all contacts")
+    print("6. Exit")
+    uChoice = int(input("Enter your choice: "))
+
+    if uChoice == 1:
+        name = input("Enter name: ")
+        add = input("Enter address: ")
+        
+        ad = AddDetails()
+        email_list = ad.add_email()
+        phone_list = ad.add_phone()
+        contact1 = Phonebook(name,add,email_list,phone_list)
+        contact1.addContact()
+    
+    elif uChoice == 2:
+        upName = input("Enter the name of the contact to update: ")
+        contact1.updateContact(upName)
+
+    elif uChoice == 3:
+        upName = input("Enter the name of the contact to delete: ")
+        contact1.deleteContact(upName)
+
+    elif uChoice == 4:
+        chName = input("Enter name of the contact to view details: ")
+        contact1.viewDetails(chName)
+
+    elif uChoice == 5:
+        contact1.viewAllContacts()
+
+    elif uChoice == 6:
+        is_continue = False
+
+    else:
+        print("Enter either 1 or 2 ")
+        
+
+
+
+# This exercise assumes that you have created the Employee class for 
+# Programming Create a program .
+# The program should present a menu that lets the user 
+# perform the following actions:
+        # a). Look up an employee
+        # b).Add a new employee instance
+ # c).Change an existing employee’s name, department, and job title
+        # d). Delete an employee
+        # e).Quit when the program ends,

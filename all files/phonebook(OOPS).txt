@@ -1,0 +1,133 @@
+class Phonebook:
+    def __init__(self):
+        self.pb={}
+    def add_contacts(self,name,address,email,phonenumber):
+        c={}
+        name=input("Enter the name to be added:")
+        self.name=[]
+        c["name"]=name
+        address=input("Enter the address to be added:")
+        self.address=[]
+        self.address.append(address)
+        m=True
+        while m:
+            a=input("ALTERNATE ADDRESS? IF YES TYPE 'Y' IF NOT TYPE 'N'").upper()
+            if a=="Y":
+                alt_address=input("Enter alternate ADDRESS:")
+                self.address.append(alt_address)
+            else:
+                m=False
+        c["address"]=self.address
+        email=input("Enter the email to be added:")
+        self.email=[]
+        self.email.append(email)
+        m=True
+        while m:
+            a=input("ALTERNATE EMAIL? IF YES TYPE 'Y' IF NOT TYPE 'N'").upper()
+            if a=="Y":
+                alt_email=input("Enter alternate email:")
+                self.email.append(alt_email)
+            else:
+                m=False
+        c["email"]=self.email
+        phonenumber=int(input("Enter the phone number to be added:"))
+        self.phonenumber=[]
+        self.phonenumber.append(phonenumber)
+        m=True
+        while m:
+            a=input("ALTERNATE NUMBER? IF YES TYPE 'Y' IF NOT TYPE 'N'").upper()
+            if a=="Y":
+                alt_phonenumber=int(input("Enter alternate number:"))
+                self.phonenumber.append(alt_phonenumber)
+            else:
+                m=False
+        c["phonenumber"]=self.phonenumber
+        self.pb[name]=c
+        print(self.pb)
+        print("Contact added successfully:)")
+
+    def veiw_all_contacts(self):
+        print(self.pb)
+
+    def veiw_contacts(self,name):
+        name=input("Enter the name to veiw:")
+        if name in self.pb:
+            print(self.pb[name])
+        else:
+            print("Contact not found")
+
+    def update_contacts(self,name,new_name,new_address,new_email,new_phonenumber):
+        name=input("Enter the name to be updated:")
+        if name in self.pb:
+            print("\n1.Update Name \n2.Update address \n3.Update phonenumber\n4.update email")
+            i=int(input("Enter the choice:"))
+            if i==1:
+                new_name=input("Enter the new name:")
+                self.pb[new_name]=self.pb.pop(name)
+                self.pb[new_name]["name"]=new_name
+                print("Name Updated!!")
+            elif i==2:
+                new_address=input("Enter the new address:")
+                self.pb[name]["address"].append(new_address)
+                print("New Address Updated")
+            elif i==3:
+                new_phonenumber=input("Enter the new phone number")
+                self.pb[name]["phonenumber"].append(new_phonenumber)
+                print("New Phonenumber updated !!")
+            elif i==4:
+                new_email=input("Enter the new email:")
+                self.pb[name]["email"].append(new_email)
+                print("New Email updated!!")
+            else:
+                print("INVALID CHOICE")
+        else:
+            print("Contact Not found")
+    
+    def delete_contacts(self,name):
+        name=input("Enter the name to be deleted:")
+        if name in self.pb:
+            print("1.Delete address""\n2.Delete phonenumber""\n3.Delete email ","\n4.Delete the contact completely")
+            j=int(input("Enter the choice:"))
+            if j == 1:
+                if self.pb[name]["address"]:
+                    deleted_address=self.pb[name]["address"].pop()
+                    print(f"Deleted Address:{deleted_address}")
+                else:
+                    print("No addresses to delete")
+            elif j == 2:
+                if self.pb[name]["phonenumber"]:
+                    deleted_phonenumber=self.pb[name]["phonenumber"].pop()
+                    print(f"Deleted Phonenumber:{deleted_phonenumber}")
+                else:
+                    print("No phonenumbers to delete")
+            elif j == 3:
+                if self.pb[name]["email"]:
+                    deleted_email=self.pb[name]["email"].pop()
+                    print(f"Deleted Email:{deleted_email}")
+                else:
+                    print("No Email to delete")
+            elif j==4:
+                name=input("Enter the name to be deleted:")
+                del self.pb[name]
+                print(f"Deleted Contact of:{name}","           SUCCESSFULLY DELETED!!")
+            else:
+                print("INVALID CHOICE")
+        else:
+            print("Contact not found")
+my_phonebook=Phonebook()
+choice=int(input("1.ADD 2.VEIW 3.UPDATE 4.DELETE  5.VEIW ALL CONTACTS"))
+m=True
+while m:
+    if choice==1:
+        my_phonebook.add_contacts("name","address","email","phonenumber")
+    elif choice==2:
+        my_phonebook.veiw_contacts("name")
+    elif choice==3:
+        my_phonebook.update_contacts("name","new_name","new_address","new_email","new_phonenumber")
+    elif choice==4:
+        my_phonebook.delete_contacts("name")
+    elif choice==5:
+        my_phonebook.veiw_all_contacts()
+    else:
+        print("Enter valid choice!!")
+    choice=int(input("1.ADD 2.VEIW 3.UPDATE 4.DELETE  5.VEIW ALL CONTACTS"))
